@@ -25,7 +25,7 @@ Note:
 
 ## Group members
 
-[delete this line and enter your names here]
+Phoebe Dupa, Rebecca Martinez, Shucan Zhao
 
 ## Group name (optional):
 
