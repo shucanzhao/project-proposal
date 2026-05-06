@@ -44,7 +44,8 @@ Hydrology/Water Quality
 
 **Response variable(s)**
 
-[delete this line and enter your bullet point list here]
+- Dissolved Oxygen (DO)
+- Elevation
 
 ## Datasets
 
