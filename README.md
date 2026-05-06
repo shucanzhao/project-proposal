@@ -35,11 +35,12 @@ Phoebe Dupa, Rebecca Martinez, Shucan Zhao
 
 **Topic:**  
 
-[delete this line and enter your topic here]
+Hydrology/Water Quality
 
 **Question(s):**  
 
-[delete this line and enter your bullet point list here]
+- How does dissolved oxygen (DO) differ across sites?
+- How does stratification differ across sites?
 
 **Response variable(s)**
 
