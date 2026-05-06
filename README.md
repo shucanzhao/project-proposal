@@ -57,7 +57,12 @@ Hydrology/Water Quality
 
 **Potential figure 1:**
 
-[delete this line and enter your figure here]
+Presenting dow does dissolved oxygen (DO) differ across sites
+- x-axis: differnt site names
+- y-axis: DO
+- geom_jitter: jitter to represent individual DO measurements
+- red point: average DO for each site
+
 
 **Potential figure 2:**
 
