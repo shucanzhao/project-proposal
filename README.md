@@ -102,15 +102,22 @@ Rebecca Martinez, Phoebe Dupa, Shucan Zhao
 
 **Elective timeline (what you will have completed each week):**
 
-Week 7: enter your own text here
+Week 7: 
+- have close to final draft of timeline check in for everyone in group to review
 
-Week 8 (timeline check in): enter your own text here
+Week 8 (timeline check in): 
+- turn in timeline check in
+- finalize ideas for analysis and background
 
-Week 9: enter your own text here
+Week 9: 
+- complete plan for elective and draft/sketch/outline of idea
 
-Week 10: enter your own text here
+Week 10: 
+- complete code and interpretation visualizations
+- complete advanced elective
 
-Finals week: enter your own text here
+Finals week: 
+- present
 
 
 
