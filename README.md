@@ -77,15 +77,15 @@ Phoebe Dupa, Rebecca Martinez, Shucan Zhao
 
 **Natural history/framing director:**
 
-[delete this line and enter your own text here]
+Phoebe Dupa
 
 **Stats and visualization director**
 
-[delete this line and enter your own text here]
+Rebecca Martinez
 
 **GitHub/code director**
 
-[delete this line and enter your own text here]
+Shucan Zhao
 
 
 ## Elective (not required for all groups or group members)
