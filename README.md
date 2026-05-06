@@ -94,11 +94,11 @@ Shucan Zhao
 
 **Group members completing elective:**
 
-[delete this line and enter your own text here]
+Rebecca Martinez, Phoebe Dupa, Shucan Zhao
 
 **Elective idea:**
 
-[delete this line and enter your own text here]
+3 clear containers with layers (of possible different colored sand) with clear or blue marbles or similar to show DO stratification at each site.
 
 **Elective timeline (what you will have completed each week):**
 
