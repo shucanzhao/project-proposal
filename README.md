@@ -51,7 +51,9 @@ Hydrology/Water Quality
 
 **Datasets used:**
 
-[delete this line and enter your bullet point list here]
+- weather data from NOAA station: `NOAA-weather-data.csv`
+- metadata containing site and survey information: `NCOS_YSI_Water_Quality_Monitoring_0.csv`
+- water quality parameter measurements (salinity, temperature, etc.): `YSI_Data_Begin_1.csv`
 
 ## Figures
 
@@ -63,7 +65,7 @@ Hydrology/Water Quality
 Presenting how dissolved oxygen (DO) differ across sites
 - x-axis: different site names
 - y-axis: DO
-- `geom_point`: add individual observations
+- `geom_point`: visualize individual observations
 - `geom_jitter`: jitter to represent more clearly
 - red point: average DO for each site
 
@@ -75,7 +77,8 @@ Presenting how dissolved oxygen (DO) differ across sites
 Presenting how dissolved oxygen (DO) varies across elevations at each site.
 - x-axis: DO
 - y-axis: Elevation code
-- geom_jitter: jitter to represent individual DO measurements
+- `geom_point`: visualize individual observations
+- `geom_jitter`: jitter to represent individual DO measurements
 
 
 **Potential figure 3:**
@@ -85,7 +88,8 @@ Presenting how dissolved oxygen (DO) varies across elevations at each site.
 
 ## Data cleaning/wrangling/summarizing plan
 
-[delete this line and enter your own text here]
+- read in data
+- 
 
 ## Project roles
 
