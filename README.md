@@ -88,8 +88,108 @@ Presenting how dissolved oxygen (DO) varies across elevations at each site.
 
 ## Data cleaning/wrangling/summarizing plan
 
-- read in data
-- 
+### 1. read in data
+
+### 2. clean data
+
+*code chunks based on week 3 work and may change*
+
+#### Weather data:
+
+- create new object from `NOAA-weather-data.csv`
+- `clean_names` to clean column names
+- `mutate` date to standard format using `lubridate` package (`date =mdy(date)`)
+- `select` columns of interest
+- exctract month and year from date column using `mutate`: 
+`month = month(date),`
+`year = year(date))`
+- assign water year using `mutate` and `case_when`:
+
+```
+# when month is October or later, assign value of year + 1
+month >= 10 ~ year + 1,
+# when month is September or earlier, assign value of existing year
+.default = year))
+
+```
+
+#### Metadata
+
+- create new object from  `NCOS_YSI_Water_Quality_Monitoring_0.csv` 
+- `clean_names` to clean column names
+- remove unnecessary columns (`object_id`)
+- change `monitoring_data` is in POSIXct format:
+
+```
+mutate(monitoring_date = mdy_hms(monitoring_date)) |>
+# rename monitoring datetime column to reflect values
+rename(monitoring_datetime = monitoring_date) |>
+2
+# create new columns for month and year of observations
+mutate(month = month(monitoring_datetime),
+year = year(monitoring_datetime)) |>
+
+```
+- assign water year 
+
+```
+mutate(wy = case_when(
+# when month is October or later, assign value of year + 1
+month >= 10 ~ year + 1,
+# when month is September or earlier, assign value of existing year
+.default = year))
+
+```
+- create new column of full site names using `mutate` and `case_when`  
+- remove non-ncos sites
+
+#### Water parameters
+
+- create new object from `YSI_Data_Begin_1.csv` 
+- - `clean_names` to clean column names
+- remove unnecessary columns (`creator`, `editor`)
+- `rename` `depth_code` to `elevation_code` 
+- fix elevation code:
+
+```
+mutate(elevation_code = case_when(
+elevation_code == 10 ~ 1,
+.default = elevation_code
+))
+
+```
+- set factors for categorical data (`elevation code`)
+
+### 3. join data frames
+
+#### metadata and water parameter data
+
+- create new object for joined data sets
+- use `full_join`:
+
+```
+x = metadata_clean,
+# water parameters contain water quality measurements
+y = water_parameters_clean,
+# connect metadata global_id to water parameter parent_global_id
+by = c("global_id" = "parent_global_id")
+
+```
+- keep columns needed for assignment
+- create date column for joining with weather data
+
+#### water quality data and weather data
+
+- create new object for joined data sets
+- use `left_join`:
+
+```
+x = water_quality,
+y = weather_clean,
+by = "date"
+
+```
+
 
 ## Project roles
 
@@ -114,7 +214,7 @@ Rebecca Martinez, Phoebe Dupa, Shucan Zhao
 
 **Elective idea:**
 
-3 clear containers with layers (of possible different colored sand) with clear or blue marbles or similar to show DO stratification at each site.
+3 clear containers (representing each site) with layers (of possible different colored sand) with clear or blue marbles or similar to show DO stratification at each site.
 
 **Elective timeline (what you will have completed each week):**
 
