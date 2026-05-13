@@ -46,6 +46,7 @@ Hydrology/Water Quality
 
 - Dissolved Oxygen (DO)
 - Elevation
+- Temperature
 
 ## Datasets
 
@@ -59,136 +60,219 @@ Hydrology/Water Quality
 
 **Potential figure 1:**
 
+This figure will compare dissolved oxygen measurements across the three main NCOS sites.
+
+- x-axis: `site_full`
+- y-axis: `do_mg_l`
+- `filter(!is.na(do_mg_l))` to remove missing DO values
+- `ggplot()` to create the plot
+- `aes(x = site_full, y = do_mg_l)` to map the variables
+- `geom_jitter()` to show individual observations
+- `stat_summary(fun = median, geom = "point")` to show the median DO for each site
+- `labs()` to label the plot
+- `theme_bw()` to use a clean theme
+
 ![Dissolved Oxygen Across Sites](images/potential_figure1.jpg).
 
-
-Presenting how dissolved oxygen (DO) differ across sites
-- x-axis: different site names
-- y-axis: DO
-- `geom_point`: visualize individual observations
-- `geom_jitter`: jitter to represent more clearly
-- red point: average DO for each site
+This figure will help answer whether some sites have higher or lower dissolved oxygen overall.
 
 
 **Potential figure 2:**
 
+This figure will compare dissolved oxygen measurements across elevation codes at each site.
+
+- x-axis: `elevation_code`
+- y-axis: `do_mg_l`
+- panels: `site_full`
+- `filter(!is.na(do_mg_l), !is.na(elevation_code))` to remove missing DO and elevation values
+- `ggplot()` to create the plot
+- `aes(x = elevation_code, y = do_mg_l)` to map the variables
+- `geom_point()` or `geom_jitter()` to show individual observations
+- `stat_summary(fun = median, geom = "point")` to show median DO at each elevation code
+- `stat_summary(fun = median, geom = "line")` to connect median DO values across elevation codes
+- `facet_wrap(~ site_full)` to compare sites
+- `coord_flip()` to make the plot look more like an elevation profile
+- `labs()` to label the plot
+- `theme_bw()` to use a clean theme
+
 ![Dissolved Oxygen At Different Elevations](images/potential_figure2.jpg).
 
-Presenting how dissolved oxygen (DO) varies across elevations at each site.
-- x-axis: DO
-- y-axis: Elevation code
-- `geom_point`: visualize individual observations
-- `geom_jitter`: jitter to represent individual DO measurements
+This figure will help answer whether dissolved oxygen changes across elevation codes and whether some sites show stronger stratification.
 
+**Potential figure 2:**
+
+### Potential figure 2: Dissolved oxygen and water temperature
+
+This figure will compare dissolved oxygen with water temperature across sites.
+
+- x-axis: `temperature_c`
+- y-axis: `do_mg_l`
+- color: `elevation_code`
+- panels: `site_full`
+- `filter(!is.na(do_mg_l), !is.na(temperature_c))` to remove missing DO and temperature values
+- `ggplot()` to create the plot
+- `aes(x = temperature_c, y = do_mg_l, color = elevation_code)` to map the variables
+- `geom_point()` to show individual observations
+- `facet_wrap(~ site_full)` to compare sites
+- `labs()` to label the plot
+- `theme_bw()` to use a clean theme
+
+![Dissolved Oxygen and Water Temperature](images/potential_figure2.jpg)
+
+This figure will help us see whether dissolved oxygen may be related to water temperature.
 
 **Potential figure 3:**
 
-*pending...*
+This figure will compare dissolved oxygen measurements across elevation codes at each site.
+
+- x-axis: `elevation_code`
+- y-axis: `do_mg_l`
+- panels: `site_full`
+- `filter(!is.na(do_mg_l), !is.na(elevation_code))` to remove missing DO and elevation values
+- `ggplot()` to create the plot
+- `aes(x = elevation_code, y = do_mg_l)` to map the variables
+- `geom_point()` or `geom_jitter()` to show individual observations
+- `stat_summary(fun = median, geom = "point")` to show median DO at each elevation code
+- `stat_summary(fun = median, geom = "line")` to connect median DO values across elevation codes
+- `facet_wrap(~ site_full)` to compare sites
+- `coord_flip()` to make the plot look more like an elevation profile
+- `labs()` to label the plot
+- `theme_bw()` to use a clean theme
+
+![Dissolved Oxygen At Different Elevations](images/potential_figure3.jpg).
+
+This figure will help answer whether dissolved oxygen changes across elevation codes and whether some sites show stronger stratification.
 
 
-## Data cleaning/wrangling/summarizing plan
+### Data cleaning/wrangling/summarizing plan
 
-### 1. read in data
+Our project will use the same general workflow from previous assignments (especially week 3), but the analysis will be focused on dissolved oxygen (DO) instead of salinity.
 
-### 2. clean data
+#### 1. Read in the data
 
-*code chunks based on week 3 work and may change*
+- Load packages with `library(tidyverse)`, `library(janitor)`, `library(lubridate)`, and `library(here)`
+- Read in the NOAA weather data with `read_csv(here("data", "NOAA-weather-data.csv"))`
+- Read in the water quality metadata with `read_csv(here("data", "NCOS_YSI_Water_Quality_Monitoring_0.csv"))`
+- Read in the water parameter data with `read_csv(here("data", "YSI_Data_Begin_1.csv"))`
 
-#### Weather data:
+#### 2. Clean the metadata
 
-- create new object from `NOAA-weather-data.csv`
-- `clean_names` to clean column names
-- `mutate` date to standard format using `lubridate` package (`date =mdy(date)`)
-- `select` columns of interest
-- exctract month and year from date column using `mutate`: 
-`month = month(date),`
-`year = year(date))`
-- assign water year using `mutate` and `case_when`:
+- Start with the original metadata dataset
+- Use `clean_names()` to clean column names
+- Use `select()` to remove unnecessary columns, such as `object_id`
+- Use `mutate()` and `mdy_hms()` to convert `monitoring_date` into a date-time format
+- Use `mutate()` with `month()` and `year()` to create month and year columns
+- Use `mutate()` with `case_when()` to create a water year column called `wy`
+- Use `mutate()` with `case_when()` to create readable site names in a new column called `site_full`
+- Use `filter()` to remove observations from `Other` sites
+- Save the cleaned object as `metadata_clean`
 
-```
-# when month is October or later, assign value of year + 1
-month >= 10 ~ year + 1,
-# when month is September or earlier, assign value of existing year
-.default = year))
+#### 3. Clean the water parameter data
 
-```
+- Start with the original water parameter dataset
+- Use `clean_names()` to clean column names
+- Use `select()` to remove unnecessary columns, such as `creator` and `editor`
+- Use `rename()` to rename `depth_code` as `elevation_code`
+- Use `mutate()` with `case_when()` to correct `elevation_code == 10` to `1`, if needed
+- Use `mutate()` with `as_factor()` to treat `elevation_code` as categorical
+- Use `fct_relevel()` to order elevation codes from `0` to `6`
+- Use `select()` to keep variables needed for the project, including `parent_global_id`, `elevation_code`, `do_mg_l`, `do_percent_sat`, `temperature_c`, and `salinity_ppt`
+- Save the cleaned object as `water_parameters_clean`
 
-#### Metadata
+#### 4. Join the metadata and water parameter data
 
-- create new object from  `NCOS_YSI_Water_Quality_Monitoring_0.csv` 
-- `clean_names` to clean column names
-- remove unnecessary columns (`object_id`)
-- change `monitoring_data` is in POSIXct format:
+- Start with `metadata_clean` and `water_parameters_clean`
+- Use `full_join()` or `left_join()` to join the datasets
+- Match `global_id` from the metadata with `parent_global_id` from the water parameter data
+- Use `select()` to keep the columns needed for the project
+- Use `mutate()` and `date()` to create a date column from the monitoring datetime column
+- Save the joined object as `water_quality`
 
-```
-mutate(monitoring_date = mdy_hms(monitoring_date)) |>
-# rename monitoring datetime column to reflect values
-rename(monitoring_datetime = monitoring_date) |>
-2
-# create new columns for month and year of observations
-mutate(month = month(monitoring_datetime),
-year = year(monitoring_datetime)) |>
+#### 5. Filter the joined dataset
 
-```
-- assign water year 
+- Start with `water_quality`
+- Use `filter()` to keep only the three main NCOS sites
+- Use `filter(!is.na(do_mg_l))` to remove missing DO values
+- Decide whether to focus on one water year, such as `filter(wy == 2024)`, or include multiple years
+- Decide which elevation codes to include using `filter(elevation_code %in% c(...))`
+- Check for unusual or extreme DO values using summaries or exploratory plots
+- Save the filtered object as `do_filtered`
 
-```
-mutate(wy = case_when(
-# when month is October or later, assign value of year + 1
-month >= 10 ~ year + 1,
-# when month is September or earlier, assign value of existing year
-.default = year))
+#### 6. Summarize dissolved oxygen across sites
 
-```
-- create new column of full site names using `mutate` and `case_when`  
-- remove non-ncos sites
+- Start with `do_filtered`
+- Use `group_by(site_full)` to group observations by site
+- Use `summarize()` to calculate:
+  - mean DO with `mean(do_mg_l, na.rm = TRUE)`
+  - median DO with `median(do_mg_l, na.rm = TRUE)`
+  - standard deviation with `sd(do_mg_l, na.rm = TRUE)`
+  - number of observations with `n()`
+- Save the summary as `do_site_summary`
 
-#### Water parameters
+This summary will help answer how dissolved oxygen differs across sites.
 
-- create new object from `YSI_Data_Begin_1.csv` 
-- - `clean_names` to clean column names
-- remove unnecessary columns (`creator`, `editor`)
-- `rename` `depth_code` to `elevation_code` 
-- fix elevation code:
+#### 7. Summarize dissolved oxygen by elevation code and site
 
-```
-mutate(elevation_code = case_when(
-elevation_code == 10 ~ 1,
-.default = elevation_code
-))
+- Start with `do_filtered`
+- Use `group_by(site_full, elevation_code)` to group observations by site and elevation code
+- Use `summarize()` to calculate:
+  - mean DO with `mean(do_mg_l, na.rm = TRUE)`
+  - median DO with `median(do_mg_l, na.rm = TRUE)`
+  - number of observations with `n()`
+- Save the summary as `do_elevation_summary`
 
-```
-- set factors for categorical data (`elevation code`)
+This summary will help answer whether dissolved oxygen changes across elevation codes and whether those changes suggest stratification.
 
-### 3. join data frames
+#### 8. Create Figure 1: Dissolved oxygen across sites
 
-#### metadata and water parameter data
+- Start with `do_filtered`
+- Use `ggplot()` to create the plot
+- Use `aes(x = site_full, y = do_mg_l)` to map site and DO
+- Use `geom_jitter()` to show individual DO observations
+- Use `stat_summary(fun = median, geom = "point")` to show the median DO for each site
+- Use `labs()` to label the axes and title
+- Use `theme_bw()` for a clean theme
 
-- create new object for joined data sets
-- use `full_join`:
+This figure will answer whether some sites tend to have higher or lower dissolved oxygen overall.
 
-```
-x = metadata_clean,
-# water parameters contain water quality measurements
-y = water_parameters_clean,
-# connect metadata global_id to water parameter parent_global_id
-by = c("global_id" = "parent_global_id")
+#### 9. Create Figure 2: Dissolved oxygen and water temperature
 
-```
-- keep columns needed for assignment
-- create date column for joining with weather data
+- Start with `do_filtered`
+- Use `filter(!is.na(temperature_c))` to remove missing temperature values
+- Use `ggplot()` to create the plot
+- Use `aes(x = temperature_c, y = do_mg_l, color = elevation_code)` to map temperature, DO, and elevation code
+- Use `geom_point()` to show individual observations
+- Use `facet_wrap(~ site_full)` to compare sites
+- Use `labs()` to label the axes, title, and legend
+- Use `theme_bw()` for a clean theme
 
-#### water quality data and weather data
+This figure will help us see whether lower dissolved oxygen values are associated with warmer water temperatures.
 
-- create new object for joined data sets
-- use `left_join`:
+#### 10. Create Figure 3: Dissolved oxygen elevation profile
 
-```
-x = water_quality,
-y = weather_clean,
-by = "date"
+- Start with `do_filtered`
+- Use `filter(!is.na(elevation_code))` to remove missing elevation values
+- Use `ggplot()` to create the plot
+- Use `aes(x = elevation_code, y = do_mg_l, group = 1)` to map elevation code and DO
+- Use `geom_point()` or `geom_jitter()` to show individual DO observations
+- Use `stat_summary(fun = median, geom = "point")` to show median DO at each elevation code
+- Use `stat_summary(fun = median, geom = "line")` to connect median DO values across elevation codes
+- Use `facet_wrap(~ site_full)` to compare sites
+- Use `coord_flip()` to make the plot look more like an elevation profile
+- Use `labs()` to label the axes and title
+- Use `theme_bw()` for a clean theme
 
-```
+This figure will answer whether dissolved oxygen changes by elevation code within each site and whether some sites show stronger stratification than others.
+
+#### 11. Interpret results
+
+- Compare median and mean DO across sites
+- Identify which site has the highest or lowest DO
+- Look for differences in DO variability across sites
+- Compare DO across elevation codes within each site
+- Decide whether elevation patterns suggest stratification or mixing
+- Use temperature or salinity patterns to help explain DO patterns, if useful
+- Connect the interpretation back to the research questions
 
 
 ## Project roles
