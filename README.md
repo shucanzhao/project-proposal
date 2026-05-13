@@ -57,22 +57,31 @@ Hydrology/Water Quality
 
 **Potential figure 1:**
 
+![Dissolved Oxygen Across Sites](images/potential_figure1.jpg).
+
+
 Presenting how dissolved oxygen (DO) differ across sites
-- x-axis: differnt site names
+- x-axis: different site names
 - y-axis: DO
-- geom_jitter: jitter to represent individual DO measurements
+- `geom_point`: add individual observations
+- `geom_jitter`: jitter to represent more clearly
 - red point: average DO for each site
 
 
 **Potential figure 2:**
 
-[delete this line and enter your figure here; if you don't have one, delete the entire section]
+![Dissolved Oxygen At Different Elevations](images/potential_figure2.jpg).
+
+Presenting how dissolved oxygen (DO) varies across elevations at each site.
+- x-axis: DO
+- y-axis: Elevation code
+- geom_jitter: jitter to represent individual DO measurements
+
 
 **Potential figure 3:**
 
-[delete this line and enter your figure here; if you don't have one, delete the entire section]
+*pending...*
 
-**Potential figure 4**
 
 [delete this line and enter your figure here; if you don't have one, delete the entire section]
 
