@@ -83,8 +83,6 @@ Presenting how dissolved oxygen (DO) varies across elevations at each site.
 *pending...*
 
 
-[delete this line and enter your figure here; if you don't have one, delete the entire section]
-
 ## Data cleaning/wrangling/summarizing plan
 
 [delete this line and enter your own text here]
