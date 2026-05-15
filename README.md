@@ -10,7 +10,7 @@ Directions:
 
 What you will submit on Friday the 15th:
 
-- [proposal](https://github.com/shucanzhao/ENVS-193DD-Final_Project): a link to your forked repository with the completed proposal in the README
+- proposal: a link to your forked repository with the completed proposal in the README
 - work plan: your paper plan that you completed in class on Monday the 4th
 
 Use your project proposal to:
@@ -298,3 +298,6 @@ Finals week:
 - final project will be [here](https://github.com/shucanzhao/ENVS-193DD-Final_Project)
 
 
+## Final Project Repository
+
+The final project repo can be found [here](https://github.com/shucanzhao/ENVS-193DD-Final_Project).
