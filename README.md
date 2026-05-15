@@ -318,8 +318,6 @@ Week 10:
 
 Finals week: 
 - present
-
-
-
+- final project will be [here](https://github.com/shucanzhao/ENVS-193DD-Final_Project)
 
 
