@@ -79,30 +79,6 @@ This figure will help answer whether some sites have higher or lower dissolved o
 
 **Potential figure 2:**
 
-This figure will compare dissolved oxygen measurements across elevation codes at each site.
-
-- x-axis: `elevation_code`
-- y-axis: `do_mg_l`
-- panels: `site_full`
-- `filter(!is.na(do_mg_l), !is.na(elevation_code))` to remove missing DO and elevation values
-- `ggplot()` to create the plot
-- `aes(x = elevation_code, y = do_mg_l)` to map the variables
-- `geom_point()` or `geom_jitter()` to show individual observations
-- `stat_summary(fun = median, geom = "point")` to show median DO at each elevation code
-- `stat_summary(fun = median, geom = "line")` to connect median DO values across elevation codes
-- `facet_wrap(~ site_full)` to compare sites
-- `coord_flip()` to make the plot look more like an elevation profile
-- `labs()` to label the plot
-- `theme_bw()` to use a clean theme
-
-![Dissolved Oxygen At Different Elevations](images/potential_figure2.jpg).
-
-This figure will help answer whether dissolved oxygen changes across elevation codes and whether some sites show stronger stratification.
-
-**Potential figure 2:**
-
-### Potential figure 2: Dissolved oxygen and water temperature
-
 This figure will compare dissolved oxygen with water temperature across sites.
 
 - x-axis: `temperature_c`
@@ -117,7 +93,8 @@ This figure will compare dissolved oxygen with water temperature across sites.
 - `labs()` to label the plot
 - `theme_bw()` to use a clean theme
 
-![Dissolved Oxygen and Water Temperature](images/potential_figure2.jpg)
+![Dissolved Oxygen At Different Elevations](images/potential_figure2.jpg).
+
 
 This figure will help us see whether dissolved oxygen may be related to water temperature.
 
