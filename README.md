@@ -29,7 +29,7 @@ Phoebe Dupa, Rebecca Martinez, Shucan Zhao
 
 ## Group name (optional):
 
-[delete this line and enter your group name here; if you don't have one, delete the whole section]
+Water Warriors
 
 ## Topic information and question
 
